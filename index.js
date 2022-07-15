@@ -1,5 +1,6 @@
 const express = require('express');
 const server = express();
+server.use(express.json())
 const routes = require('./Routes/routes');
 const cors = require('cors');
 const PORT = process.env.PORT || 8080;
@@ -15,7 +16,7 @@ server.use((req, res, next) => {
 });
 
 server.use(routes);
-server.use(express.json())
+
 
 
 

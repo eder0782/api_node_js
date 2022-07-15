@@ -2,9 +2,9 @@ const userRoutes = require('express').Router();
 
 const User = require('../models/User');
 
-userRoutes.get('/user',async (req,res)=>{
+userRoutes.post('/user',async (req,res)=>{
 
-    const{name,password,email,active}=req.query;
+    const{name,password,email,active}=req.body;
     const user={
         name,
         password,
@@ -24,12 +24,27 @@ userRoutes.get('/user',async (req,res)=>{
     })
 });
 
-userRoutes.get('/delete/:id',async (req,res)=>{
-    const id = req.params.id;
-    // console.log(id);
+
+userRoutes.get('/listUserAll',async (req,res)=>{
+   
+        const allUser = await User.find().catch((err)=>{
+            return res.json({
+                error:true,
+                message:'Erro na consulta => '+err
+            })
+        })
+           
+        res.json(allUser);
+   
+});
+
+userRoutes.delete('/user',async (req,res)=>{
+    //const email =  req.params.email;
+    //console.log(req.body);
+    // res.send('sdfsdf')
    
    const user= await User.findOne(
-        {_id: id}
+        {email: req.body.email},
     );
 
     if(!user){
@@ -39,8 +54,8 @@ userRoutes.get('/delete/:id',async (req,res)=>{
         })
     }
     
-    await User.findByIdAndDelete(
-        {_id: id},
+    await User.deleteOne(
+        {_id: user._id},
         )
     .then(()=>{
         return res.json({
@@ -56,19 +71,62 @@ userRoutes.get('/delete/:id',async (req,res)=>{
         })
     })
     
-})
-userRoutes.get('/listUserAll',async (req,res)=>{
-   
-        const allUser = await User.find().catch((err)=>{
-            return res.json({
-                error:true,
-                message:'Erro na consulta => '+err
-            })
-        })
-           
-        res.json(allUser);
-   
 });
+
+userRoutes.get('/user/:email', async (req,res)=>{
+    const user = await User.findOne({
+        email: req.params.email
+    })
+
+    if(!user){
+        return res.json({
+            error:true,
+            message:"Usuário não encontrado"
+        })       
+    }
+
+    res.json(user);
+});
+
+
+userRoutes.put('/user/:email', async (req,res)=>{
+    const {name,email,password,active} = req.body;
+    
+    const user = await User.findOne({
+        email: req.params.email
+    })
+
+    if(!user){
+        return res.json({
+            error:true,
+            message:"Usuário não encontrado"
+        })       
+    }
+    const newUser={
+        name,
+        password,
+        email,
+        active
+    }
+
+    try{
+        await User.updateOne({_id: user._id},newUser);
+        res.json({
+            error:false,
+            message:'Usuário atualizado com sucesso!'
+        });
+    }catch(err){
+        res.json({
+            error:true,
+            message:'Erro ao tentar atualizar o usuário!'
+        });
+
+    }
+
+    //res.json(user);
+});
+
+
 
 
 
