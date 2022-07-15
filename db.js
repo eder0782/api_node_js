@@ -8,7 +8,7 @@ const DB_PASS = 'lloT4gdiZTfoNBVx'
 const connect = `mongodb+srv://${DB_USE}:${DB_PASS}@primeirocluster.watpkc4.mongodb.net/?retryWrites=true&w=majority`;
 
 async function dbConnect(){ await mongoose.connect(connect).then(()=>{
-    console.log('Conexxão realizada com sucesso!');
+    console.log('Conexão realizada com sucesso!');
 }).catch((err)=>{
     console.log('Erro ao tentar conectar ao banco!');
 })}
