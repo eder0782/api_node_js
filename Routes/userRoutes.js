@@ -127,6 +127,32 @@ userRoutes.put('/user/:email', async (req,res)=>{
 });
 
 
+userRoutes.post('/login',async (req,res)=>{
+
+    const{email,password} = req.body;
+
+    const user = await User.findOne({email: email});
+    
+    if(!user){
+        return res.json({
+            error:true,
+            message:'Email não cadastrado!'
+        })
+    }
+
+    if(user.password!=password){
+        return res.json({
+            error:true,
+            message:'Senha inválida!'
+        })
+    }
+
+    res.json({
+        error:false,
+        message:'Login realizado com sucesso!'
+    })
+})
+
 
 
 
