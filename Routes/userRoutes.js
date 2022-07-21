@@ -38,13 +38,14 @@ userRoutes.get('/listUserAll',async (req,res)=>{
    
 });
 
-userRoutes.delete('/user',async (req,res)=>{
+userRoutes.delete('/user/:email',async (req,res)=>{
     //const email =  req.params.email;
     //console.log(req.body);
     // res.send('sdfsdf')
-   
+//    console.log(req.body); 
+//    console.log(req.params.email);
    const user= await User.findOne(
-        {email: req.body.email},
+        {email: req.params.email},
     );
 
     if(!user){
