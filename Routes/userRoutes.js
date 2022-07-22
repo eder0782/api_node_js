@@ -4,12 +4,15 @@ const User = require('../models/User');
 
 userRoutes.post('/user',async (req,res)=>{
 
-    const{name,password,email,active}=req.body;
+    const{name, sobrenome,password,email,active}=req.body;
     const user={
         name,
-        password,
+        sobrenome,
         email,
-        active
+        password,
+        active,
+        admin:false,
+        photo: "https://img.icons8.com/ios-glyphs/344/user--v1.png"
     }
     await User.create(user).then(()=>{
         res.json({
