@@ -13,7 +13,8 @@ server.use((req, res, next) => {
     res.herader("Access-Control-Expose-Headers","Content-Range,X-Content-Range,XMLHttpRequest")*/
     res.header("Access-Control-Allow-Origin", "*")
 res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
-res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+// res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     server.use(cors());
     next();
 });

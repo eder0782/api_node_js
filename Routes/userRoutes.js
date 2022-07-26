@@ -93,7 +93,7 @@ userRoutes.get('/user/:email', async (req,res)=>{
 });
 
 
-userRoutes.put('/user/:email', async (req,res)=>{
+userRoutes.post('/user/update/:email', async (req,res)=>{
     const {name,email,password,active} = req.body;
     
     const user = await User.findOne({
