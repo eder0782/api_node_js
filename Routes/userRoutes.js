@@ -94,7 +94,7 @@ userRoutes.get('/user/:email', async (req,res)=>{
 
 
 userRoutes.post('/user/update/:email', async (req,res)=>{
-    const {name,email,password,active} = req.body;
+    const {name,email,password,active,sobrenome} = req.body;
     
     const user = await User.findOne({
         email: req.params.email
@@ -110,7 +110,8 @@ userRoutes.post('/user/update/:email', async (req,res)=>{
         name,
         password,
         email,
-        active
+        active,
+        sobrenome
     }
 
     try{
